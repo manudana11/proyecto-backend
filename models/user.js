@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
   User.init({
     name: DataTypes.STRING,
     surname: DataTypes.STRING,
-    email: DataTypes.CITEXT,
+    email: DataTypes.STRING,
     direction: DataTypes.STRING,
     phonenumber: DataTypes.STRING,
     bithdate: DataTypes.DATEONLY,
