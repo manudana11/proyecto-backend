@@ -4,7 +4,8 @@
     "password": "tu contraseña",
     "database": "golf_ecommerce",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "jwt_secret": "tu contraseña"
   },
   "test": {
     "username": "root",
