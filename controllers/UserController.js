@@ -1,8 +1,9 @@
-const { User, Token } = require("../models/index");
+const { User, Token, Sequelize } = require("../models/index");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { use } = require("../routes/users");
 const { jwt_secret } = require("../config/config.json")['development'];
+const { Op } = Sequelize;
 
 const UserController = {
     async create(req, res) {
@@ -36,6 +37,22 @@ const UserController = {
             const token = jwt.sign({id: user.id}, jwt_secret);
             await Token.create({UserId:user.id, token:token})
             res.send({msg: `Welcome ${user.name}`, user, token});
+        } catch (error) {
+            console.error(error);
+            res.status(500).send(error);
+        }
+    },
+    async logout(req, res) {
+        try {
+            await Token.destroy({
+                where: {
+                    [Op.and]: [
+                        { userId: req.user.id },
+                        { token: req.headers.authorization }
+                    ]
+                }
+            });
+            res.send({msg: `See you later alligator`});
         } catch (error) {
             console.error(error);
             res.status(500).send(error);
