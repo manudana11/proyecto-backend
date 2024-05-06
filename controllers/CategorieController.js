@@ -1,4 +1,5 @@
-const { Categorie, Product } = require("../models/index");
+const { Categorie, Product, Sequelize } = require("../models/index");
+const { Op } = Sequelize;
 
 const CategorieController = {
     async create(req, res) {
@@ -51,6 +52,21 @@ const CategorieController = {
         try {
             const categorie = await Categorie.findByPk(req.params.id, {
                 include:[{model: Product,attributes:["name"], through: {attributes: []}}]
+            });
+            res.send(categorie);
+        } catch (error) {
+            console.error(error);
+            res.status(500).send(error);
+        }
+    },
+    async getByName(req, res) {
+        try {
+            const categorie = await Categorie.findAll({
+                where: {
+                    name: {
+                        [Op.like]: `%${req.params.name}%`,
+                    }
+                }
             });
             res.send(categorie);
         } catch (error) {
