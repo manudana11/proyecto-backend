@@ -47,6 +47,17 @@ const CategorieController = {
             res.status(500).send(error);
         }
     },
+    async getById(req, res) {
+        try {
+            const categorie = await Categorie.findByPk(req.params.id, {
+                include:[{model: Product,attributes:["name"], through: {attributes: []}}]
+            });
+            res.send(categorie);
+        } catch (error) {
+            console.error(error);
+            res.status(500).send(error);
+        }
+    },
 };
 
 module.exports = CategorieController;
