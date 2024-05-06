@@ -10,7 +10,7 @@ const UserController = {
             const password = await bcrypt.hash(req.body.password, 10);
             req.body.password = password;
             req.body.role = "user";
-            const user = await User.create({...req.body, password:password, role: "user"});
+            const user = await User.create({...req.body, password:password, confirmed: false, role: "user"});
             res.status(201).send({msg: "User created successfully!", user});
         } catch (error) {
             console.error(error);
@@ -74,6 +74,19 @@ const UserController = {
                 }
             });
             res.status(201).send({msg: "User updated successfully"});
+        } catch (error) {
+            console.error(error);
+            res.status(500).send(error);
+        }
+    },
+    async delete(req, res) {
+        try {
+            await User.destroy({
+                where: {
+                    id: req.params.id,
+                },
+            });
+            res.send("User deleted successfully");
         } catch (error) {
             console.error(error);
             res.status(500).send(error);
