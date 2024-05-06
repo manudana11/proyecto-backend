@@ -5,7 +5,7 @@ const ProductController = {
     async create(req, res) {
         try {
             const product = await Product.create(req.body);
-            product.addCategorie(req.body.CategorieId);
+            await product.addCategorie(req.body.CategorieId);
             res.status(201).send({msg: "Product created succesfully", product});
         } catch (error) {
             console.error(error);

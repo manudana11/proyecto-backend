@@ -12,10 +12,6 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
-      date: {
-        allowNull: false,
-        type: Sequelize.DATEONLY
-      },
       amount: {
         type: Sequelize.INTEGER
       },
