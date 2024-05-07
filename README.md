@@ -5,8 +5,6 @@
 
 En este proyecto de backend, hemos creado una robusta base de datos para un e-commerce, combinando el uso de Node.js y Express con MySQL y Sequelize. La API resultante permite a los usuarios realizar pedidos y ofrece funcionalidades completas como registro, autenticación, gestión de productos y categorías, así como la creación y seguimiento de pedidos.
 
-Mi proyecto esta impulsado por Node.js, Express, MySQL con Sequelize y otras tecnologías de vanguardia.
-
 ## Tecnologías
 
 Nodo.js
