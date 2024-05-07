@@ -1,6 +1,7 @@
 const { User, Token, Sequelize, Order, Product } = require("../models/index");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const { where } = require("sequelize");
 const { jwt_secret } = require("../config/config.json")['development'];
 const { Op } = Sequelize;
 
@@ -94,6 +95,18 @@ const UserController = {
             res.status(500).send(error);
         }
     },
+    async getUserOnline(req, res) {
+        try {
+            const user = await User.findOne({
+                where: {id: req.user.id},
+                include:[{model: Order,include: [{model: Product,attributes:["name", "price"], through: {attributes: []}}]}],
+            });
+            res.send({msg: "User online is:", user});
+        } catch (error) {
+            console.error(error);
+            res.status(500).send(error);
+        }
+    }
 };
 
 module.exports = UserController;
