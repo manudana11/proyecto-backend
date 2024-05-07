@@ -15,12 +15,60 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Product.init({
-    name: DataTypes.STRING,
-    price: DataTypes.INTEGER,
-    brand: DataTypes.STRING,
-    description: DataTypes.STRING,
-    stock: DataTypes.INTEGER,
-    reference: DataTypes.INTEGER
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: "Please insert product name",
+        },
+      },
+    },
+    price: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: "Please insert product price",
+        },
+      },
+    },
+    brand: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: "Please insert product brand",
+        },
+      },
+    },
+    description: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: "Please insert product description",
+        },
+      },
+    },
+    stock: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: "Please insert product stock",
+        },
+      },
+    },
+    reference: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: "Please insert product reference",
+        },
+      },
+    },
   }, {
     sequelize,
     modelName: 'Product',
