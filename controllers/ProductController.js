@@ -2,17 +2,17 @@ const { Product, Categorie, Sequelize } = require("../models/index");
 const { Op } = Sequelize;
 
 const ProductController = {
-    async create(req, res) {
+    async create(req, res, next) {
         try {
             const product = await Product.create(req.body);
             await product.addCategorie(req.body.CategorieId);
             res.status(201).send({msg: "Product created succesfully", product});
         } catch (error) {
             console.error(error);
-            res.status(500).send(error);
+            next(error);
         }
     },
-    async update(req, res) {
+    async update(req, res, next) {
         try {
             await Product.update(req.body, {
                 where: {
@@ -24,7 +24,7 @@ const ProductController = {
             res.status(201).send({msg: "Product updated successfully"});
         } catch (error) {
             console.error(error);
-            res.status(500).send(error);
+            next(error);
         }
     },
     async delete(req, res) {

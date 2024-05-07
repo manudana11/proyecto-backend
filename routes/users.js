@@ -11,5 +11,6 @@ router.post("/login", UserController.login);
 router.delete("/logout", authentication, UserController.logout);
 router.delete("/id/:id", authentication, UserController.delete);
 router.get("/conecteduser", authentication, UserController.getUserOnline);
+router.get("/confirm/:email", UserController.confirm);
 
 module.exports = router;

@@ -1,23 +1,44 @@
 const { User, Token, Sequelize, Order, Product } = require("../models/index");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { where } = require("sequelize");
+const { transporter } = require("../config/nodemailer");
 const { jwt_secret } = require("../config/config.json")['development'];
 const { Op } = Sequelize;
 
 const UserController = {
-    async create(req, res) {
+    async create(req, res, next) {
         try {
             const password = await bcrypt.hash(req.body.password, 10);
             req.body.password = password;
             req.body.role = "user";
             const user = await User.create({...req.body, password:password, confirmed: false, role: "user"});
+            const url = `http://localhost:3000/users/confirm/${req.body.email}`;
+            await transporter.sendMail({
+                to: req.body.email,
+                subject: "Confirme su registro",
+                html: `<h3> Bienvenido, estás a un paso de registrarte </h3>
+                <a href="${url}"> Clica para confirmar tu registro</a>
+                `,
+              });
+        
             res.status(201).send({msg: "User created successfully!", user});
         } catch (error) {
             console.error(error);
-            res.status(500).send(error);
+            next(error);
         }
     },
+    async confirm(req,res){
+        try {
+          await User.update({confirmed:true},{
+            where:{
+              email: req.params.email
+            }
+          })
+          res.status(201).send({msg: "User confirmed successfully"});
+        } catch (error) {
+          console.error(error)
+        }
+      },    
     async login(req, res) {
         try {
             const user = await User.findOne({
@@ -28,6 +49,10 @@ const UserController = {
 
             if(!user) {
                 return res.status(400).send({msg: "Invalid user or password"});
+            };
+
+            if(!user.confirmed) {
+                return res.status(400).send({msg: "You must confirm your email buddy"});
             }
 
             const passwordMatch = bcrypt.compareSync(req.body.password, user.password);
@@ -69,7 +94,7 @@ const UserController = {
             res.status(500).send(error);
         }
     },
-    async update(req, res) {
+    async update(req, res, next) {
         try {
             await User.update(req.body, {
                 where: {
@@ -79,7 +104,7 @@ const UserController = {
             res.status(201).send({msg: "User updated successfully"});
         } catch (error) {
             console.error(error);
-            res.status(500).send(error);
+            next(error)
         }
     },
     async delete(req, res) {
@@ -106,7 +131,7 @@ const UserController = {
             console.error(error);
             res.status(500).send(error);
         }
-    }
+    },
 };
 
 module.exports = UserController;
