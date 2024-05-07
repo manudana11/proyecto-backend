@@ -1,11 +1,9 @@
 
 # Projecto Back-End e-commerce
 
-En este proyecto de backend creamos una base de datos para un e-commerce con los conocimientos adquiridos en las tecnologías node y express, además de mysql y sequelize.
-
 ## Descripción general
 
-En este proyecto, he creado una API para un e-commerce que permite a los usuarios realizar pedidos. Incluye funcionalidades como registro de usuarios con autenticación, gestión de productos, gestión de categorías, creación de pedidos y más.
+En este proyecto de backend, hemos creado una robusta base de datos para un e-commerce, combinando el uso de Node.js y Express con MySQL y Sequelize. La API resultante permite a los usuarios realizar pedidos y ofrece funcionalidades completas como registro, autenticación, gestión de productos y categorías, así como la creación y seguimiento de pedidos.
 
 Mi proyecto esta impulsado por Node.js, Express, MySQL con Sequelize y otras tecnologías de vanguardia.
 
