@@ -1,5 +1,4 @@
-const { where } = require("sequelize");
-const { Order, Product, User } = require("../models/index");
+const { Order, Product, User, Token, Sequelize } = require("../models/index");
 
 const OrderController = {
     async create(req, res) {
@@ -15,7 +14,7 @@ const OrderController = {
                 totalAmount += product.price;
             });
             req.body.amount = totalAmount;
-            const order = await Order.create({...req.body, status: "Preparation", amount: totalAmount});
+            const order = await Order.create({...req.body, status: "Preparation", amount: totalAmount, UserId: req.user.id});
             req.body.status = "Preparation";
             await order.addProduct(req.body.ProductId);
             res.status(201).send({msg: "Order created succesfully", order, totalAmount, products});
