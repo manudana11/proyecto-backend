@@ -1,7 +1,7 @@
 const { User, Token, Sequelize, Order, Product } = require("../models/index");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { transporter } = require("../config/nodemailer");
+const  transporter = require("../config/nodemailer");
 const { jwt_secret } = require("../config/config.json")['development'];
 const { Op } = Sequelize;
 
