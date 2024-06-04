@@ -40,7 +40,7 @@ const CategorieController = {
     async getAll(req, res) {
         try {
             const categorie = await Categorie.findAll({
-                include:[{model: Product,attributes:["name"], through: {attributes: []}}]
+                include:[{model: Product,attributes:["id", "name"], through: {attributes: []}}]
             });
             res.send(categorie);
         } catch (error) {
@@ -51,7 +51,7 @@ const CategorieController = {
     async getById(req, res) {
         try {
             const categorie = await Categorie.findByPk(req.params.id, {
-                include:[{model: Product,attributes:["name"], through: {attributes: []}}]
+                include:[{model: Product,attributes:["id", "name", "price", "brand", "description", "reference",], through: {attributes: []}}]
             });
             res.send(categorie);
         } catch (error) {
